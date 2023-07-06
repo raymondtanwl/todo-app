@@ -43,39 +43,55 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
     @include flex-center();
     padding: 32px 0;
     .center-content {
-      outline: 1px solid red;
+      // outline: 1px solid red;
       min-width: 540px;
       z-index: 2;
+      box-shadow: 0px 12px 12px 1px rgba(168, 168, 168, 0.15);
       .title-container {
         font-size: 32px;
-        padding: 16px;
+        letter-spacing: 10px;
+        padding: 40px 0;
+        color: $very-light-gray;
         @include flex-center(space-between);
         align-items: center;
+        .title {
+          letter-spacing: 13px;
+          font-size: 40px;
+          font-weight: 700;
+        }
       }
     }
   }
 
   .add-input {
-    .todo-input {
+    margin-bottom: 24px;
+    input.todo-input {
       width: 100%;
       padding: 16px 16px 16px 48px;
       font-size: 18px;
+      border-radius: 6px;
+      border: 0;
+      &:focus {
+        outline: none;
+      }
     }
-    margin-bottom: 24px;
   }
 
   .list-container {
-    outline: 1px solid blue;
+    // outline: 1px solid blue;
     background: white;
     border-radius: 6px;
     .list-item {
       padding: 24px 16px;
-      border-bottom: 1px solid gray;
+      border-bottom: 1px solid $very-light-grayish-blue;
       @include flex-center(space-between);
       .left {
         @include flex-center($justify: start);
         align-items: center;
         gap: 16px;
+        &.checked {
+          text-decoration: line-through;
+        }
       }
       .remove {
         display: none;
@@ -91,13 +107,25 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
     .list-bottom {
       font-size: 14px;
       padding: 16px;
+      color: $dark-grayish-blue;
       @include flex-center($justify: space-between);
       .center {
         @include flex-center($justify: space-around);
         gap: 12px;
-        .filter-option:hover {
+        font-weight: 700;
+        .filter-option {
           cursor: pointer;
+          &.active {
+            color: $bright-blue;
+          }
+          &:not(.active):hover {
+            color: $very-dark-grayish-blue
+          }
         }
+      }
+      .right:hover {
+        cursor: pointer;
+        color: $very-dark-grayish-blue;
       }
     }
   }
@@ -112,6 +140,10 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
     &:hover {
       border-color: transparent;
       background: linear-gradient(white, white) padding-box, $check-bg border-box;
+    }
+    &.checked {
+      background: url('/images/icon-check.svg') no-repeat center, $check-bg;
+      border: 0;
     }
   }
 

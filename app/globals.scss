@@ -86,7 +86,9 @@ body {
   font-size: 18px;
 }
 
+$very-light-gray: hsl(0, 0%, 98%);
 body {
+  background: $very-light-gray;
   // color: rgb(var(--foreground-rgb));
   // background: linear-gradient(
   //     to bottom,
