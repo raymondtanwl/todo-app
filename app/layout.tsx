@@ -1,10 +1,5 @@
 import "./globals.scss";
-import { Josefin_Sans } from "next/font/google";
-
-const inter = Josefin_Sans({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
+import { josefinSans } from "./util/font";
 
 export const metadata = {
   title: "Create Next App",
@@ -18,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={josefinSans.className}>{children}</body>
     </html>
   );
 }

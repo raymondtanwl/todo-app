@@ -1,10 +1,12 @@
 "use client";
 
+import { josefinSans } from "@/app/util/font";
 import Image from "next/image";
 import { useState } from "react";
 import "./todo.scss";
 
 export default function Todo() {
+  const [theme, setTheme] = useState("light");
   const initList = [
     "Complete online JavaScript course",
     "Jog around the park 3x",
@@ -12,12 +14,16 @@ export default function Todo() {
   ];
   const [todoItems, setTodoItems] = useState(initList);
 
-  // function on key down will log out 'a'
   function onInputKeyDown(e: any) {
-    console.log("onInputKeyDown", e);
+    // on enter key
     if (e.keyCode === 13) {
       setTodoItems([...todoItems, e.target.value]);
     }
+  }
+
+  function onRemove(idx: any) {
+    console.log("onRemove", idx);
+    setTodoItems(todoItems.filter((itm, index) => index !== idx));
   }
 
   return (
@@ -43,7 +49,7 @@ export default function Todo() {
           </div>
           <div className="add-input">
             <input
-              className="todo-input"
+              className={josefinSans.className + " todo-input"}
               type="text"
               placeholder="Create a new todo..."
               onKeyDown={(e) => onInputKeyDown(e)}
@@ -55,10 +61,24 @@ export default function Todo() {
               return (
                 <div key={index} className="list-item">
                   <div className="left">
-                    <div className="checkbox">O</div>
+                    <div className="checkbox">
+                      {/* <Image
+                        src="/images/icon-check.svg"
+                        alt="check"
+                        width={20}
+                        height={20}
+                      /> */}
+                    </div>
                     {itm}
                   </div>
-                  <div className="remove">X</div>
+                  <div className="remove" onClick={() => onRemove(index)}>
+                    <Image
+                      src={"/images/icon-cross.svg"}
+                      alt="cross"
+                      width={20}
+                      height={20}
+                    />
+                  </div>
                 </div>
               );
             })}
