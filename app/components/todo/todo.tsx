@@ -14,9 +14,12 @@ export default function Todo() {
   const [theme, setTheme] = useState("light");
   const [filter, setFilter] = useState("All");
   const initList: TodoItem[] = [
-    { text: "Complete online JavaScript course", done: false },
+    { text: "Complete online JavaScript course", done: true },
     { text: "Jog around the park 3x", done: false },
     { text: "10 minutes meditation", done: false },
+    { text: "Read for 1 hour", done: false },
+    { text: "Pick up groceries", done: false },
+    { text: "Complete Todo App on Frontend Mentor", done: false },
   ];
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState(initList);
@@ -76,21 +79,40 @@ export default function Todo() {
     setTodoItems(todoItems.filter((itm) => !itm.done));
   }
 
+  function changeTheme(theme: string) {
+    console.log("changeTheme", theme);
+    setTheme(theme);
+  }
+
   return (
-    <div className="todo-main-container">
+    <div className={"todo-main-container " + (theme === "dark" ? "dark" : "")}>
       <div className="top-bg"></div>
       <div className="center-container">
         <div className="center-content">
           <div className="title-container">
             <h2 className="title">TODO</h2>
-            <Image
-              src="/images/icon-moon.svg"
-              alt="moon"
-              width={26}
-              height={26}
-            />
+            <div className="theme-switcher">
+              {theme === "light" ? (
+                <Image
+                  src="/images/icon-moon.svg"
+                  alt="moon"
+                  width={26}
+                  height={26}
+                  onClick={() => changeTheme("dark")}
+                />
+              ) : (
+                <Image
+                  src="/images/icon-sun.svg"
+                  alt="sun"
+                  width={26}
+                  height={26}
+                  onClick={() => changeTheme("light")}
+                />
+              )}
+            </div>
           </div>
           <div className="add-input">
+            <div className="checkbox"></div>
             {/* use josefinSans.className to ensure the correct font-family is applied */}
             <input
               className={josefinSans.className + " todo-input"}
@@ -125,12 +147,13 @@ export default function Todo() {
             })}
 
             <div className="list-bottom">
-              <div className="left">{todoItems.length} items left</div>
+              <div className="left">
+                {todoItems.filter((itm) => !itm.done).length} items left
+              </div>
               <div className="center">
                 <div
                   className={
-                    "filter-option hover-pointer " +
-                    (filter === "All" ? "active" : "")
+                    "filter-option " + (filter === "All" ? "active" : "")
                   }
                   onClick={() => setFilter("All")}
                 >
@@ -138,8 +161,7 @@ export default function Todo() {
                 </div>
                 <div
                   className={
-                    "filter-option hover-pointer " +
-                    (filter === "Active" ? "active" : "")
+                    "filter-option " + (filter === "Active" ? "active" : "")
                   }
                   onClick={() => setFilter("Active")}
                 >
@@ -147,18 +169,14 @@ export default function Todo() {
                 </div>
                 <div
                   className={
-                    "filter-option hover-pointer " +
-                    (filter === "Completed" ? "active" : "")
+                    "filter-option " + (filter === "Completed" ? "active" : "")
                   }
                   onClick={() => setFilter("Completed")}
                 >
                   Completed
                 </div>
               </div>
-              <div
-                className="right hover-pointer"
-                onClick={() => clearCompleted()}
-              >
+              <div className="right" onClick={() => clearCompleted()}>
                 Clear Completed
               </div>
             </div>

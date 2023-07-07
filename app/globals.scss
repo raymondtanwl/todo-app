@@ -89,6 +89,7 @@ body {
 $very-light-gray: hsl(0, 0%, 98%);
 body {
   background: $very-light-gray;
+  height: 100vh;
   // color: rgb(var(--foreground-rgb));
   // background: linear-gradient(
   //     to bottom,
