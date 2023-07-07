@@ -3,9 +3,11 @@
 import { josefinSans } from "@/app/util/font";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ReactSortable } from "react-sortablejs";
 import "./todo.scss";
 
 interface TodoItem {
+  id: number;
   text: string;
   done: boolean;
 }
@@ -13,13 +15,14 @@ interface TodoItem {
 export default function Todo() {
   const [theme, setTheme] = useState("light");
   const [filter, setFilter] = useState("All");
+  const [idSeq, setIIdSeq] = useState(6);
   const initList: TodoItem[] = [
-    { text: "Complete online JavaScript course", done: true },
-    { text: "Jog around the park 3x", done: false },
-    { text: "10 minutes meditation", done: false },
-    { text: "Read for 1 hour", done: false },
-    { text: "Pick up groceries", done: false },
-    { text: "Complete Todo App on Frontend Mentor", done: false },
+    { id: 1, text: "Complete online JavaScript course", done: true },
+    { id: 2, text: "Jog around the park 3x", done: false },
+    { id: 3, text: "10 minutes meditation", done: false },
+    { id: 4, text: "Read for 1 hour", done: false },
+    { id: 5, text: "Pick up groceries", done: false },
+    { id: 6, text: "Complete Todo App on Frontend Mentor", done: false },
   ];
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState(initList);
@@ -46,7 +49,11 @@ export default function Todo() {
   function onInputKeyDown(e: any) {
     // on enter key
     if (e.keyCode === 13) {
-      setTodoItems([...todoItems, { text: todoInput, done: false }]);
+      setTodoItems([
+        ...todoItems,
+        { id: idSeq + 1, text: todoInput, done: false },
+      ]);
+      setIIdSeq(idSeq + 1);
       setTodoInput("");
     }
   }
@@ -56,9 +63,10 @@ export default function Todo() {
     console.log("onInputChange", todoInput);
   }
 
-  function onRemove(idx: any) {
-    console.log("onRemove", idx);
-    setTodoItems(todoItems.filter((itm, index) => index !== idx));
+  function onRemove(item: TodoItem) {
+    console.log("onRemove", item);
+    setTodoItems(todoItems.filter((itm) => item.id !== itm.id));
+    setFilteredItems(filteredItems.filter((itm) => item.id !== itm.id));
   }
 
   function onChecked(idx: any) {
@@ -86,6 +94,9 @@ export default function Todo() {
 
   return (
     <div className={"todo-main-container " + (theme === "dark" ? "dark" : "")}>
+      {/* debug view array */}
+      {/* {todoItems.map((itm) => itm.text).join("|")} <br></br>
+      {filteredItems.map((itm) => itm.text).join("|")} */}
       <div className="top-bg"></div>
       <div className="center-container">
         <div className="center-content">
@@ -124,27 +135,29 @@ export default function Todo() {
             />
           </div>
           <div className="list-container">
-            {filteredItems.map((itm, index) => {
-              return (
-                <div key={index} className="list-item hover-pointer">
-                  <div className={"left " + (itm.done ? "checked" : "")}>
-                    <div
-                      className={"checkbox " + (itm.done ? "checked" : "")}
-                      onClick={() => onChecked(index)}
-                    ></div>
-                    {itm.text}
+            <ReactSortable list={filteredItems} setList={setFilteredItems}>
+              {filteredItems.map((itm, index) => {
+                return (
+                  <div key={index} className="list-item hover-pointer">
+                    <div className={"left " + (itm.done ? "checked" : "")}>
+                      <div
+                        className={"checkbox " + (itm.done ? "checked" : "")}
+                        onClick={() => onChecked(index)}
+                      ></div>
+                      {itm.text}
+                    </div>
+                    <div className="remove" onClick={() => onRemove(itm)}>
+                      <Image
+                        src={"/images/icon-cross.svg"}
+                        alt="cross"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
                   </div>
-                  <div className="remove" onClick={() => onRemove(index)}>
-                    <Image
-                      src={"/images/icon-cross.svg"}
-                      alt="cross"
-                      width={20}
-                      height={20}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </ReactSortable>
 
             <div className="list-bottom">
               <div className="left">
