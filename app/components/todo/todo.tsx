@@ -9,6 +9,7 @@ import Filter from "../filter/filter";
 import "./todo.scss";
 import lightBg from "/images/bg-desktop-light.jpg";
 import darkBg from "/images/bg-desktop-dark.jpg";
+import checkedImg from "/images/icon-check.svg";
 
 // Your users should be able to:
 // View the optimal layout for the app depending on their device's screen size
@@ -37,8 +38,8 @@ export default function Todo() {
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState(initList);
   const [filteredItems, setFilteredItems] = useState(initList);
-  // const lightBg = "/images/bg-desktop-light.jpg";
-  // const darkBg = "/images/bg-desktop-dark.jpg";
+  // fix for image path ref in prod
+  const checkedImgCss = `url(${checkedImg.src}) no-repeat center, linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%)`;
 
   useEffect(() => {
     function filterList(filterType: string) {
@@ -112,6 +113,7 @@ export default function Todo() {
       {filteredItems.map((itm) => itm.text).join("|")} */}
       <div
         className="top-bg"
+        // fix for image path ref in prod
         style={{
           backgroundImage: `url(${
             theme === "light" ? lightBg.src : darkBg.src
@@ -162,6 +164,9 @@ export default function Todo() {
                     <div className={"left " + (itm.done ? "checked" : "")}>
                       <div
                         className={"checkbox " + (itm.done ? "checked" : "")}
+                        style={{
+                          background: `${itm.done ? checkedImgCss : ""}`,
+                        }}
                         onClick={() => onChecked(index)}
                       ></div>
                       {itm.text}
