@@ -114,7 +114,7 @@ export default function Todo() {
             <div className="theme-switcher">
               {theme === "light" ? (
                 <Image
-                  src="/images/icon-moon.svg"
+                  src="./images/icon-moon.svg"
                   alt="moon"
                   width={26}
                   height={26}
@@ -122,7 +122,7 @@ export default function Todo() {
                 />
               ) : (
                 <Image
-                  src="/images/icon-sun.svg"
+                  src="./images/icon-sun.svg"
                   alt="sun"
                   width={26}
                   height={26}
