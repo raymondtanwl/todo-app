@@ -147,7 +147,7 @@ export default function Todo() {
             <ReactSortable list={filteredItems} setList={setFilteredItems}>
               {filteredItems.map((itm, index) => {
                 return (
-                  <div key={index} className="list-item hover-pointer">
+                  <div key={index} className="list-item">
                     <div className={"left " + (itm.done ? "checked" : "")}>
                       <div
                         className={"checkbox " + (itm.done ? "checked" : "")}
@@ -174,31 +174,6 @@ export default function Todo() {
               </div>
               <div className="desktop-filter">
                 <Filter filter={filter} setFilter={setFilter} />
-
-                {/* <div
-                  className={
-                    "filter-option " + (filter === "All" ? "active" : "")
-                  }
-                  onClick={() => setFilter("All")}
-                >
-                  All
-                </div>
-                <div
-                  className={
-                    "filter-option " + (filter === "Active" ? "active" : "")
-                  }
-                  onClick={() => setFilter("Active")}
-                >
-                  Active
-                </div>
-                <div
-                  className={
-                    "filter-option " + (filter === "Completed" ? "active" : "")
-                  }
-                  onClick={() => setFilter("Completed")}
-                >
-                  Completed
-                </div> */}
               </div>
               <div className="right" onClick={() => clearCompleted()}>
                 Clear Completed
@@ -209,6 +184,8 @@ export default function Todo() {
           <div className="mobile-filter">
             <Filter filter={filter} setFilter={setFilter} mobile="true" />
           </div>
+
+          <div className="drag-n-drop-text">Drag and drop to reorder list</div>
         </div>
       </div>
     </div>

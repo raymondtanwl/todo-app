@@ -26,7 +26,7 @@
       min-width: 540px;
       z-index: 2;
       .title-container {
-        font-size: 32px;
+        font-size: 1.7778rem; // 32px
         letter-spacing: 10px;
         padding: 40px 0;
         color: colors.$very-light-gray;
@@ -34,7 +34,7 @@
         align-items: center;
         .title {
           letter-spacing: 13px;
-          font-size: 40px;
+          font-size: 2.2222rem; // 40px
           font-weight: 700;
         }
         .theme-switcher {
@@ -61,7 +61,7 @@
       }
       width: 100%;
       padding: 24px 16px 24px 16px;
-      font-size: 18px;
+      font-size: 1rem;
       border-radius: 6px;
       border: 0;
       &:focus {
@@ -79,7 +79,9 @@
     border-radius: 6px;
     margin-bottom: 32px;
     .list-item {
-      padding: 24px 16px;
+      font-size: 1rem; // 14px
+      padding: 22px 16px;
+      align-items: center;
       @include theme.themify(theme.$themes) {
         border-bottom: 1px solid theme.themed('dividerLine');
         color: theme.themed('textColor');
@@ -97,18 +99,18 @@
         }
       }
       .remove {
-        display: none;
+        visibility: hidden;
         height: 20px;
       }
       &:hover {
         cursor: pointer;
         & .remove {
-          display: block;
+          visibility: visible;
         }
       }
     }
     .list-bottom {
-      font-size: 14px;
+      font-size: 0.7778rem; // 14px
       padding: 16px;
       @include theme.themify(theme.$themes) {
         color: theme.themed('paleText');
@@ -132,8 +134,8 @@
     border-radius: 50%;
     @include theme.themify(theme.$themes) {
       color: theme.themed('dividerLine');
+      border: 2px solid theme.themed('checkboxOutline'); 
     }
-    // border: 2px solid lightgray;
     // background: linear-gradient(white, white) padding-box, $check-bg border-box;
     // background: $check-bg no-repeat;
     width: 20px;
@@ -159,14 +161,65 @@
     display: none;
   }
 
+  .drag-n-drop-text {
+    margin-top: 40px;
+    font-size: 0.7778rem;
+    text-align: center;
+    @include theme.themify(theme.$themes) {
+      color: theme.themed('paleText');
+    }
+  }
+
 }
 
 @media screen and (max-width: 600px) {
   .todo-main-container {
+    .top-bg {
+      height: 200px;
+    }
+    .center-container {
+      padding: 0;
+      .center-content {
+        min-width: 0;
+        width: 80%;
+        .title-container {
+          font-size: 1.7778rem; // 32px
+          .title {
+            font-size: 1.7778rem; // 40px
+          }
+        }
+      }
+    }
 
-    .center-container .center-content {
-      min-width: 0;
-      width: 80%;
+    .add-input input.todo-input {
+      font-size:  0.6111rem; // 11px
+    }
+    .add-input {
+      margin-bottom: 16px;
+        input.todo-input {
+        padding: 20px 16px 20px 16px;
+      }
+    }
+
+    .list-container {
+      margin-bottom: 16px;
+      .list-item {
+        font-size: 0.6111rem; // 11px
+        padding: 16px 16px;
+        .left {
+          gap: 12px;
+        }
+        .remove {
+          height: 14px;
+          img {
+            width: 14px;
+            height: 14px;
+          }
+        }
+      }
+      .list-bottom {
+        font-size: 0.6667rem;
+      }
     }
 
     .desktop-filter {
@@ -174,6 +227,11 @@
     }
     .mobile-filter {
       display: block;
+    }
+
+    .drag-n-drop-text {
+      margin-top: 40px;
+      font-size: 0.7778rem;
     }
   }
 }

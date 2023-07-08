@@ -32,3 +32,11 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .filter {
+    &.mobile {
+      font-size: 0.7778rem;
+    }
+  }
+}
