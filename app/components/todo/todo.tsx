@@ -2,9 +2,16 @@
 
 import { josefinSans } from "@/app/util/font";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ReactSortable } from "react-sortablejs";
+import { ThemeContext } from "../context/theme-context";
+import Filter from "../filter/filter";
 import "./todo.scss";
+
+// Your users should be able to:
+// View the optimal layout for the app depending on their device's screen size
+// Toggle light and dark mode
+// Bonus: Drag and drop to reorder items on the list
 
 interface TodoItem {
   id: number;
@@ -13,7 +20,8 @@ interface TodoItem {
 }
 
 export default function Todo() {
-  const [theme, setTheme] = useState("light");
+  // const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useContext(ThemeContext);
   const [filter, setFilter] = useState("All");
   const [idSeq, setIIdSeq] = useState(6);
   const initList: TodoItem[] = [
@@ -87,13 +95,14 @@ export default function Todo() {
     setTodoItems(todoItems.filter((itm) => !itm.done));
   }
 
-  function changeTheme(theme: string) {
-    console.log("changeTheme", theme);
-    setTheme(theme);
-  }
+  const handleThemeChange = () => {
+    console.log("handleThemeChange", theme);
+    const isCurrentDark = theme === "dark";
+    setTheme(isCurrentDark ? "light" : "dark");
+  };
 
   return (
-    <div className={"todo-main-container " + (theme === "dark" ? "dark" : "")}>
+    <div className={"todo-main-container"}>
       {/* debug view array */}
       {/* {todoItems.map((itm) => itm.text).join("|")} <br></br>
       {filteredItems.map((itm) => itm.text).join("|")} */}
@@ -109,7 +118,7 @@ export default function Todo() {
                   alt="moon"
                   width={26}
                   height={26}
-                  onClick={() => changeTheme("dark")}
+                  onClick={() => handleThemeChange()}
                 />
               ) : (
                 <Image
@@ -117,7 +126,7 @@ export default function Todo() {
                   alt="sun"
                   width={26}
                   height={26}
-                  onClick={() => changeTheme("light")}
+                  onClick={() => handleThemeChange()}
                 />
               )}
             </div>
@@ -163,8 +172,10 @@ export default function Todo() {
               <div className="left">
                 {todoItems.filter((itm) => !itm.done).length} items left
               </div>
-              <div className="center">
-                <div
+              <div className="desktop-filter">
+                <Filter filter={filter} setFilter={setFilter} />
+
+                {/* <div
                   className={
                     "filter-option " + (filter === "All" ? "active" : "")
                   }
@@ -187,12 +198,16 @@ export default function Todo() {
                   onClick={() => setFilter("Completed")}
                 >
                   Completed
-                </div>
+                </div> */}
               </div>
               <div className="right" onClick={() => clearCompleted()}>
                 Clear Completed
               </div>
             </div>
+          </div>
+
+          <div className="mobile-filter">
+            <Filter filter={filter} setFilter={setFilter} mobile="true" />
           </div>
         </div>
       </div>

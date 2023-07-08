@@ -1,58 +1,36 @@
-// ### Primary
-$bright-blue: hsl(220, 98%, 61%);
-$check-bg: linear-gradient(135deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
-
-// ### Neutral
-
-// ### Light Theme
-$very-light-gray: hsl(0, 0%, 98%);
-$very-light-grayish-blue: hsl(236, 33%, 92%);
-$light-grayish-blue: hsl(233, 11%, 84%);
-$dark-grayish-blue: hsl(236, 9%, 61%);
-$very-dark-grayish-blue: hsl(235, 19%, 35%);
-
-// ### Dark Theme
-$very-dark-blue: hsl(235, 21%, 11%);
-$very-dark-desaturated-blue: hsl(235, 24%, 19%);
-$light-grayish-blue: hsl(234, 39%, 85%);
-$light-grayish-blue-hover: hsl(236, 33%, 92%);
-$dark-grayish-blue: hsl(234, 11%, 52%);
-$very-dark-grayish-blue: hsl(233, 14%, 35%);
-$very-dark-grayish-blue-2: hsl(237, 14%, 26%);
-
-
-@mixin flex-center($justify: center) {
-  display: flex;
-  flex-direction: row;
-  justify-content: $justify;
-}
-
+@use '/app/util/colors.scss' as colors;
+@use '/app/util/mixins.scss' as mixins;
+@use '/app/styles/theme-var.scss' as theme;
 
 .todo-main-container {
+  @include theme.themify(theme.$themes) {
+    background: theme.themed('backgroundColor');
+  }
+  height: 100%;
   .top-bg {
+    @include theme.themify(theme.$themes) {
+      background-image: theme.themed('backgroundImage');
+    }
     width: 100%;
     height: 300px;
-    background-image: url('/images/bg-desktop-light.jpg');
     background-position: center 0;
     background-size: cover;
     position: absolute;
   }
 
-
   .center-container {
-    @include flex-center();
+    @include mixins.flex-center();
     padding: 32px 0;
     .center-content {
       // outline: 1px solid red;
       min-width: 540px;
       z-index: 2;
-      box-shadow: 0px 12px 12px 1px rgba(168, 168, 168, 0.15);
       .title-container {
         font-size: 32px;
         letter-spacing: 10px;
         padding: 40px 0;
-        color: $very-light-gray;
-        @include flex-center(space-between);
+        color: colors.$very-light-gray;
+        @include mixins.flex-center(space-between);
         align-items: center;
         .title {
           letter-spacing: 13px;
@@ -67,15 +45,20 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
   }
 
   .add-input {
-    @include flex-center(space-between);
+    @include mixins.flex-center(space-between);
     align-items: center;
     margin-bottom: 24px;
-    background-color: white;
+    @include theme.themify(theme.$themes) {
+      background-color: theme.themed('containerBackground');
+    }
     border-radius: 6px;
     .checkbox {
       margin-left:16px;
     }
     input.todo-input {
+      @include theme.themify(theme.$themes) {
+        background-color: theme.themed('containerBackground');
+      }
       width: 100%;
       padding: 24px 16px 24px 16px;
       font-size: 18px;
@@ -88,20 +71,29 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
   }
 
   .list-container {
-    // outline: 1px solid blue;
-    background: white;
+    @include theme.themify(theme.$themes) {
+      background-color: theme.themed('containerBackground');
+      color: theme.themed('highlightText');
+      box-shadow: 0px 12px 12px 1px theme.themed('boxShadow');
+    }
     border-radius: 6px;
+    margin-bottom: 32px;
     .list-item {
       padding: 24px 16px;
-      border-bottom: 1px solid $very-light-grayish-blue;
-      @include flex-center(space-between);
+      @include theme.themify(theme.$themes) {
+        border-bottom: 1px solid theme.themed('dividerLine');
+        color: theme.themed('textColor');
+      }
+      @include mixins.flex-center(space-between);
       .left {
-        @include flex-center($justify: start);
+        @include mixins.flex-center($justify: start);
         align-items: center;
         gap: 16px;
         &.checked {
           text-decoration: line-through;
-          color: $light-grayish-blue;
+          @include theme.themify(theme.$themes) {
+            color: theme.themed('strikeThroughText');
+          }
         }
       }
       .remove {
@@ -118,103 +110,114 @@ $very-dark-grayish-blue-2: hsl(237, 14%, 26%);
     .list-bottom {
       font-size: 14px;
       padding: 16px;
-      color: $dark-grayish-blue;
-      @include flex-center($justify: space-between);
+      @include theme.themify(theme.$themes) {
+        color: theme.themed('paleText');
+      }
+      @include mixins.flex-center($justify: space-between);
       .center {
-        @include flex-center($justify: space-around);
+        @include mixins.flex-center($justify: space-around);
         gap: 12px;
         font-weight: 700;
-        .filter-option {
-          cursor: pointer;
-          &.active {
-            color: $bright-blue;
-          }
-          &:not(.active):hover {
-            color: $very-dark-grayish-blue
-          }
-        }
       }
       .right:hover {
         cursor: pointer;
-        color: $very-dark-grayish-blue;
+        @include theme.themify(theme.$themes) {
+          color: theme.themed('highlightText');
+        }
       }
     }
   }
 
   .checkbox {
     border-radius: 50%;
-    border: 2px solid lightgray;
+    @include theme.themify(theme.$themes) {
+      color: theme.themed('dividerLine');
+    }
+    // border: 2px solid lightgray;
     // background: linear-gradient(white, white) padding-box, $check-bg border-box;
     // background: $check-bg no-repeat;
     width: 20px;
     height: 20px;
     &:hover {
       border-color: transparent;
-      background: linear-gradient(white, white) padding-box, $check-bg border-box;
+      @include theme.themify(theme.$themes) {
+        color: theme.themed('containerBackground');
+        background: linear-gradient(
+          theme.themed('containerBackground'), 
+          theme.themed('containerBackground')
+          ) padding-box, colors.$check-bg border-box;
+      }
+      background: linear-gradient(white, white) padding-box, colors.$check-bg border-box;
     }
     &.checked {
-      background: url('/images/icon-check.svg') no-repeat center, $check-bg;
+      background: url('/images/icon-check.svg') no-repeat center, colors.$check-bg;
       border: 0;
     }
   }
 
-}
-
-.todo-main-container.dark {
-  background: $very-dark-blue;
-  height: 100%;
-  .top-bg {
-    background-image: url('/images/bg-desktop-dark.jpg');
-  }
-
-  .center-container {
-    .center-content {
-      box-shadow: none;
-    }
-  }
-
-  .add-input {
-    background-color: $very-dark-desaturated-blue;
-    input.todo-input {
-      background-color: $very-dark-desaturated-blue;
-    }
-  }
-
-
-  .list-container {
-    background: $very-dark-desaturated-blue;
-    color: $light-grayish-blue;
-    .list-item {
-      border-bottom: 1px solid $very-dark-grayish-blue-2;
-      .left.checked {
-        color: $very-dark-grayish-blue;
-      }
-    }
-    .list-bottom {
-      .center {
-        .filter-option {
-          &:not(.active):hover {
-            color: $light-grayish-blue-hover;
-          }
-        }
-      }
-      .right:hover {
-        color: $light-grayish-blue-hover;
-      }
-    }
-  }
-
-  .checkbox {
-    border: 2px solid $very-dark-grayish-blue-2;
-    &:hover {
-      border-color: transparent;
-      background: linear-gradient($very-dark-desaturated-blue, $very-dark-desaturated-blue) padding-box, $check-bg border-box;
-    }
-    &.checked {
-      background: url('/images/icon-check.svg') no-repeat center, $check-bg;
-      border: 0;
-    }
+  .mobile-filter {
+    display: none;
   }
 
 }
+
+@media screen and (max-width: 600px) {
+  .todo-main-container {
+
+    .center-container .center-content {
+      min-width: 0;
+      width: 80%;
+    }
+
+    .desktop-filter {
+      display: none;
+    }
+    .mobile-filter {
+      display: block;
+    }
+  }
+}
+
+// .todo-main-container.dark {
+//   // .add-input input.todo-input {
+//   //   @include theme.themify(theme.$themes) {
+//   //     background-color: theme.themed('containerBackground');
+//   //   }
+//   // }
+
+//   // .list-container {
+//   //   // background: colors.$very-dark-desaturated-blue;
+//   //   // color: colors.$light-grayish-blue;
+//   //   .list-item {
+//   //     // border-bottom: 1px solid colors.$very-dark-grayish-blue-2;
+//   //     .left.checked {
+//   //       color: colors.$very-dark-grayish-blue;
+//   //     }
+//   //   }
+//   //   .list-bottom {
+//   //     .center {
+//   //       .filter-option {
+//   //         &:not(.active):hover {
+//   //           color: colors.$light-grayish-blue-hover;
+//   //         }
+//   //       }
+//   //     }
+//   //     .right:hover {
+//   //       color: colors.$light-grayish-blue-hover;
+//   //     }
+//   //   }
+//   // }
+
+//   // .checkbox {
+//   //   border: 2px solid colors.$very-dark-grayish-blue-2;
+//   //   &:hover {
+//   //     border-color: transparent;
+//   //     background: linear-gradient(colors.$very-dark-desaturated-blue, colors.$very-dark-desaturated-blue) padding-box, colors.$check-bg border-box;
+//   //   }
+//   //   &.checked {
+//   //     background: url('/images/icon-check.svg') no-repeat center, colors.$check-bg;
+//   //     border: 0;
+//   //   }
+//   // }
+// }
 

@@ -1,0 +1,34 @@
+@use '/app/util/colors.scss' as colors;
+@use '/app/util/mixins.scss' as mixins;
+@use '/app/styles/theme-var.scss' as theme;
+
+.filter {
+  @include theme.themify(theme.$themes) {
+    background: theme.themed('containerBackground');
+    color: theme.themed('paleText');
+  }
+  @include mixins.flex-center($justify: center);
+  border-radius: 6px;
+  font-size: 14px;
+  gap: 16px;
+  font-weight: 700;
+  .filter-option {
+    cursor: pointer;
+    &.active {
+      color: colors.$bright-blue;
+    }
+    &:not(.active):hover {
+      @include theme.themify(theme.$themes) {
+        color: theme.themed('highlightText');
+      }
+    }
+  }
+
+  &.mobile {
+    font-size: 18px;
+    padding: 16px;
+    @include theme.themify(theme.$themes) {
+      box-shadow: 0px 12px 12px 1px theme.themed('boxShadow');
+    }
+  }
+}

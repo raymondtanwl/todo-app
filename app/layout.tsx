@@ -1,5 +1,9 @@
+"use client";
+
 import "./globals.scss";
 import { josefinSans } from "./util/font";
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "./components/context/theme-context";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,9 +15,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [theme, setTheme] = useState("light");
+
   return (
-    <html lang="en">
-      <body className={josefinSans.className}>{children}</body>
-    </html>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <html lang="en">
+        <body className={josefinSans.className + ` theme-${theme}`}>
+          {children}
+        </body>
+      </html>
+    </ThemeContext.Provider>
   );
 }
