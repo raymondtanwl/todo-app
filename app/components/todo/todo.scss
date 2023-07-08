@@ -8,9 +8,9 @@
   }
   height: 100%;
   .top-bg {
-    @include theme.themify(theme.$themes) {
-      background-image: theme.themed('backgroundImage');
-    }
+    // @include theme.themify(theme.$themes) {
+    //   background-image: theme.themed('backgroundImage');
+    // }
     width: 100%;
     height: 300px;
     background-position: center 0;

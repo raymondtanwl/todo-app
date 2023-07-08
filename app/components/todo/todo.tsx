@@ -7,6 +7,8 @@ import { ReactSortable } from "react-sortablejs";
 import { ThemeContext } from "../context/theme-context";
 import Filter from "../filter/filter";
 import "./todo.scss";
+import lightBg from "/images/bg-desktop-light.jpg";
+import darkBg from "/images/bg-desktop-dark.jpg";
 
 // Your users should be able to:
 // View the optimal layout for the app depending on their device's screen size
@@ -35,6 +37,8 @@ export default function Todo() {
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState(initList);
   const [filteredItems, setFilteredItems] = useState(initList);
+  // const lightBg = "/images/bg-desktop-light.jpg";
+  // const darkBg = "/images/bg-desktop-dark.jpg";
 
   useEffect(() => {
     function filterList(filterType: string) {
@@ -106,7 +110,14 @@ export default function Todo() {
       {/* debug view array */}
       {/* {todoItems.map((itm) => itm.text).join("|")} <br></br>
       {filteredItems.map((itm) => itm.text).join("|")} */}
-      <div className="top-bg"></div>
+      <div
+        className="top-bg"
+        style={{
+          backgroundImage: `url(${
+            theme === "light" ? lightBg.src : darkBg.src
+          })`,
+        }}
+      ></div>
       <div className="center-container">
         <div className="center-content">
           <div className="title-container">
